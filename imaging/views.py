@@ -32,7 +32,7 @@ def iframe_form(request):
         return render_to_response('imaging/iframe_form.html',
                 { 'form' : form },
                 context_instance=RequestContext(request))
-iframe_form = permission_required('imaging.upload_images')(iframe_form)
+iframe_form = permission_required('imaging.imaging_upload_images')(iframe_form)
 
 def ajax_image_removal(request):
     if request.method == 'POST':
@@ -49,4 +49,4 @@ def ajax_image_removal(request):
     else:
         return HttpResponse("fail");
 
-ajax_image_removal = permission_required('imaging.ajax_delete_images')(ajax_image_removal)
+ajax_image_removal = permission_required('imaging.imaging_delete_images')(ajax_image_removal)
