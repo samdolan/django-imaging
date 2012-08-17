@@ -1,6 +1,6 @@
-from django.utils.html import escape, conditional_escape
-from django.utils.translation import ugettext
-from django.utils.encoding import StrAndUnicode, force_unicode
+from django.utils.html import conditional_escape
+from django.utils.encoding import force_unicode
+from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.forms.util import flatatt
 from django.forms.widgets import Widget
@@ -18,7 +18,7 @@ class ImageSelection(Widget):
   def render(self, name, value, attrs=None):
     if not value == None:
       value = value.replace(' ', '')
-    if value == None or value == '': 
+    if value == None or value == '':
       initial_values = []
     else:
       ids = value.split(",")
@@ -34,9 +34,9 @@ class ImageSelection(Widget):
     <div class="image_container"> %s </div>
 
     <div class="iframe_container">
-      <iframe src="/imaging/iframe_form/" class="image_upload_form" width="100%%" height="205" frameborder="0"></iframe>
+      <iframe src="%s" class="image_upload_form" width="100%%" height="205" frameborder="0"></iframe>
     </div>
-    ''' % images_html
+    ''' % (images_html, reverse('imaging_iframe_form'))
 
     return mark_safe(u'<input type="hidden" class="imaging_data" %s value="%s" /> %s' % (flatatt(final_attrs),
                 conditional_escape(force_unicode(value)), html))
